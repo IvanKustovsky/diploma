@@ -1,0 +1,278 @@
+/* ../../assets/EquipmentsPage.css */
+
+.equipments-page {
+  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+
+.equipments-page h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  padding: 2rem;
+}
+
+.error {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  background-color: #fceded;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e74c3c;
+}
+
+.equipment-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.equipment-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 1.2rem;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.equipment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.equipment-card h3 {
+  font-size: 1.3rem;
+  color: #34495e;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  min-height: 2.6rem;
+  overflow: hidden;
+}
+
+.equipment-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #f0f0f0;
+}
+
+/* Стилі для плейсхолдера зображення */
+.image-placeholder {
+  width: 100%;
+  height: 200px;
+  background-color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+
+.equipment-card p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.equipment-card p strong {
+  color: #333;
+}
+
+.equipment-card a {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #3498db;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.equipment-card a:hover {
+  background-color: #2980b9;
+  color: #ffffff;
+  transform: scale(1.03);
+}
+
+.equipment-card a:active {
+  transform: scale(0.98);
+}
+
+/* Стиль для повідомлення про відсутність елементів */
+.no-items {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  padding: 3rem 2rem;
+  border: 1px dashed #cccccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-top: 2rem;
+}
+
+.equipment-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.equipment-actions a,
+.equipment-actions .action-link {
+  flex: 1 1 auto;
+  min-width: 120px;
+  text-align: center;
+}
+
+.action-link {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none;
+}
+
+.action-link:hover {
+  background-color: #d35400;
+  transform: scale(1.03);
+}
+
+.action-link:active {
+  transform: scale(0.98);
+}
+
+.upload-link.prominent {
+  display: inline-block;
+  margin: 0 auto 2rem auto;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.1rem;
+  background-color: #27ae60;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.upload-link.prominent:hover {
+  background-color: #219150;
+  transform: translateY(-2px);
+}
+
+.upload-link.prominent:active {
+  transform: translateY(0);
+}
+
+/* Стилі для пагінації */
+.pagination-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 2.5rem auto 0 auto;
+
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+.pagination-controls button {
+  padding: 0.6rem 1.2rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.pagination-controls button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.pagination-controls button:active:not(:disabled) {
+  transform: translateY(0px);
+}
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-size-selector label {
+  font-size: 0.95rem;
+  color: #34495e;
+  white-space: nowrap;
+}
+
+.pagination-controls select {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  min-width: 60px;
+}
+
+.pagination-controls select:disabled {
+  background-color: #eee;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 1rem;
+  color: #34495e;
+  margin: 0 0.5rem;
+  white-space: nowrap;
+}

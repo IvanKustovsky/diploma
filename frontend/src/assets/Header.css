@@ -1,0 +1,174 @@
+/* src/assets/Header.css */
+
+.header {
+  /* Використовуємо темніший синій відтінок з градієнту головної сторінки */
+  background-color: #2a5298;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Додаємо легку тінь */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Використовуємо той же шрифт */
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Стиль логотипу/назви сайту */
+.header-title {
+  margin: 0;
+  font-size: 1.8rem;
+  margin-right: 20px;
+  text-decoration: none;
+  color: white;
+  /* Назва сайту білого кольору */
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.header-title:hover {
+  color: #eef4f8;
+  /* Трохи світліший на наведенні */
+}
+
+.header-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.header-nav li {
+  margin-right: 20px;
+  /* Збільшимо відступ між пунктами меню */
+}
+
+.header-nav a {
+  color: white;
+  /* Колір посилань меню - білий */
+  text-decoration: none;
+  font-size: 1rem;
+  position: relative;
+  /* Для ефекту підкреслення */
+  transition: color 0.3s ease;
+}
+
+/* Ефект підкреслення при наведенні для посилань меню */
+.header-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  /* Розташування під текстом */
+  left: 0;
+  background-color: white;
+  /* Колір підкреслення */
+  transition: width 0.3s ease-in-out;
+}
+
+.header-nav a:hover::after {
+  width: 100%;
+  /* Розтягуємо підкреслення при наведенні */
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  /* Виштовхує правий блок в кінець контейнера */
+}
+
+/* Базові стилі для всіх кнопок у хедері */
+.header-right button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  /* Відступ між кнопками */
+  border: none;
+  border-radius: 20px;
+  /* Більш округлі кнопки, як CTA на головній */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  font-weight: 600;
+  /* Трохи жирніший текст */
+}
+
+/* Стиль кнопки "Увійти" та "Вийти" (вторинна дія) */
+.login-btn,
+.logout-btn {
+  /* Стиль схожий на обведений CTA або сіру кнопку з ProtectedRoute */
+  /* Варіант 1: Обведений синім */
+  background-color: transparent;
+  color: white;
+  /* Колір тексту білий на темному фоні */
+  border: 1px solid white;
+  /* Біла рамка */
+}
+
+.login-btn:hover,
+.logout-btn:hover {
+  /* Варіант 1: Фон синій, текст білий */
+  background-color: #4a90e2;
+  /* Основний синій */
+  border-color: #4a90e2;
+  color: white;
+}
+
+/* Стиль кнопки "Зареєструватись" (основна CTA) */
+.signup-btn {
+  /* Стиль схожий на CTA кнопку з головної сторінки */
+  background-color: #ffffff;
+  /* Білий фон */
+  color: #2a5298;
+  /* Колір тексту - темний синій */
+  border: 1px solid #ffffff;
+  /* Біла рамка, щоб не "стрибало" при наведенні */
+}
+
+.signup-btn:hover {
+  background-color: #f0f0f0;
+  /* Легкий сірий на наведенні */
+  border-color: #f0f0f0;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  /* Розташовуємо одразу під пунктом меню */
+  left: 0;
+  background-color: #2a5298;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 10px 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  /* Розміщуємо елементи вертикально */
+  min-width: 200px;
+}
+
+.dropdown-menu li {
+  padding: 8px 16px;
+  white-space: nowrap;
+}
+
+.dropdown-menu li:hover {
+  background-color: #4a90e2;
+}
+
+.dropdown-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}

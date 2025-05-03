@@ -1,0 +1,146 @@
+/* Додаємо box-sizing до всіх елементів */
+* {
+  box-sizing: border-box;
+}
+
+/* Загальний стиль сторінки реєстрації */
+.signup-page {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #c4baba;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.signup-page h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Додаємо стилі для помилок, якщо хочете змінити більше параметрів */
+.text-error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.success-message {
+  color: #4caf50;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: #f44336;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Стиль форми */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+form input:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+form button {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+form button:active {
+  background-color: #3e8e41;
+}
+
+/* Стилі для PhoneInput */
+.phone-input-container {
+  margin-bottom: 15px;
+}
+
+/* Група для префікса і поля введення */
+.phone-input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
+/* Стилі для префікса */
+.phone-prefix {
+  padding: 10px 15px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Стилі для поля введення телефону */
+.phone-input-group input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+/* Стилі для кастомного checkbox */
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Виправлення вирівнювання для label */
+.checkbox-field {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-field label {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+/* Виправлення для помилок валідації */
+.validation-error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
