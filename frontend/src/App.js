@@ -1,13 +1,9 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-// Layout
 import Layout from "./components/ui/Layout";
 
-// Auth Context
 import { AuthProvider } from "./context/AuthContext";
 
-// Pages
 import HomePage from "./pages/Home/HomePage";
 import SignUp from "./pages/SignUp/SignUp";
 import LogIn from "./pages/Login/LogIn";
@@ -23,10 +19,9 @@ import AdvertisementModerationPage from "./pages/Moderation/AdvertisementModerat
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import RentFormPage from "./pages/Rentals/RentFormPage";
 import IncomingRentalRequestsPage from "./pages/Rentals/IncomingRentalRequestsPage";
-import OutgointRentalRequestsPage from "./pages/Rentals/OutgointRentalRequestsPage";
+import OutgoingRentalRequestsPage from "./pages/Rentals/OutgoingRentalRequestsPage";
 import IncomingRentalRequestDetails from "./pages/Rentals/IncomingRentalRequestDetails";
 
-// Protected Route
 import ProtectedRoute from "./components/ui/ProtectedRoute";
 
 function App() {
@@ -76,7 +71,7 @@ function App() {
               path="/outgoing-rental-requests"
               element={
                 <ProtectedRoute>
-                  <OutgointRentalRequestsPage />
+                  <OutgoingRentalRequestsPage />
                 </ProtectedRoute>
               }
             />

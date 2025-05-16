@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   fetchEquipmentById,
-  fetchImageById, // Використовуємо для отримання URL зображень
+  fetchImageById,
   updateEquipment,
   uploadMainImage,
   uploadAdditionalImages,
   getCategoriesWithSubcategories
 } from "../../services/api";
 import { categoryTranslations, subcategoryTranslations } from '../../data/translations';
-import "../../assets/EditEquipmentPage.css"; // Переконайтесь, що CSS файл існує та підключений
+import "../../assets/EditEquipmentPage.css";
 import { validateEquipment } from "../../utils/validation";
 
 const EditEquipmentPage = () => {
@@ -18,10 +18,10 @@ const EditEquipmentPage = () => {
   const [categoriesData, setCategoriesData] = useState({});
   const [mainImagePreview, setMainImagePreview] = useState(null);
   const [mainImageFile, setMainImageFile] = useState(null);
-  const [additionalImages, setAdditionalImages] = useState([]); // Для завантаження нових
-  const [additionalImagePreviews, setAdditionalImagePreviews] = useState([]); // Для відображення існуючих
+  const [additionalImages, setAdditionalImages] = useState([]);
+  const [additionalImagePreviews, setAdditionalImagePreviews] = useState([]);
   const [validationErrors, setValidationErrors] = useState({});
-  const [isLoadingImages, setIsLoadingImages] = useState(false); // Стан завантаження зображень
+  const [isLoadingImages, setIsLoadingImages] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -39,61 +39,67 @@ const EditEquipmentPage = () => {
     const loadEquipment = async () => {
       try {
         const data = await fetchEquipmentById(id);
+        console.log(data)
         setEquipment(data);
-        setMainImagePreview(null); // Скидаємо попередній перегляд
-        setAdditionalImagePreviews([]); // Скидаємо попередній перегляд
-        setIsLoadingImages(true); // Починаємо завантаження зображень
+        setMainImagePreview(null);
+        setAdditionalImagePreviews([]);
+        setIsLoadingImages(true);
 
-        // Завантаження головного зображення
         if (data.mainImageId) {
           try {
             const imgUrl = await fetchImageById(data.mainImageId);
             setMainImagePreview(imgUrl);
           } catch (imgErr) {
             console.error(`Помилка завантаження головного зображення ID ${data.mainImageId}:`, imgErr);
-            // Можна встановити зображення-заглушку
-            // setMainImagePreview('/path/to/placeholder.png');
           }
         }
 
-        // Завантаження додаткових зображень
         if (data.imageIds && Array.isArray(data.imageIds)) {
-          // Фільтруємо ID, виключаючи головне зображення, щоб не завантажувати двічі
           const additionalIds = data.imageIds.filter(imgId => imgId !== data.mainImageId);
 
           if (additionalIds.length > 0) {
-            // Створюємо масив промісів для завантаження кожного зображення
             const imagePromises = additionalIds.map(async (imgId) => {
               try {
                 const url = await fetchImageById(imgId);
-                // Повертаємо об'єкт з ID та URL для використання в key
                 return { id: imgId, url: url };
               } catch (err) {
                 console.error(`Помилка завантаження зображення ID ${imgId}:`, err);
-                return null; // Повертаємо null у разі помилки
+                return null;
               }
             });
 
-            // Очікуємо завершення всіх промісів
             const settledImages = await Promise.all(imagePromises);
 
-            // Фільтруємо невдалі завантаження (null) та оновлюємо стан
             setAdditionalImagePreviews(settledImages.filter(img => img !== null));
           }
         }
       } catch (err) {
         console.error("Помилка при завантаженні обладнання:", err);
       } finally {
-        setIsLoadingImages(false); // Завершуємо завантаження зображень
+        setIsLoadingImages(false);
       }
     };
     loadEquipment();
-  }, [id]); // Залежність від id
+  }, [id]);
 
   const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    let updatedValue = value;
+
+    if (name === "pricePerDay") {
+      updatedValue = value.trim();
+      if (updatedValue !== "" && !isNaN(updatedValue)) {
+        updatedValue = parseFloat(updatedValue).toString();
+      } else if (updatedValue === "") {
+        updatedValue = "";
+      }
+    } else {
+      updatedValue = value.trim();
+    }
+
     setEquipment({
       ...equipment,
-      [e.target.name]: e.target.value,
+      [name]: updatedValue,
     });
   };
 
@@ -110,21 +116,18 @@ const EditEquipmentPage = () => {
       setValidationErrors({});
     } catch (err) {
       alert("Помилка оновлення.");
-      console.error("Update Error:", err); // Додайте для деталізації помилки
+      console.error("Update Error:", err);
     }
   };
 
-  // --- Функція перезавантаження зображень після успішного завантаження ---
   const reloadImages = async () => {
     setIsLoadingImages(true);
     setMainImagePreview(null);
     setAdditionalImagePreviews([]);
     try {
-      // Отримуємо оновлені дані (зокрема, ID зображень)
       const data = await fetchEquipmentById(id);
-      setEquipment(data); // Оновлюємо стан обладнання
+      setEquipment(data);
 
-      // Перезавантажуємо головне зображення
       if (data.mainImageId) {
         try {
           const imgUrl = await fetchImageById(data.mainImageId);
@@ -134,7 +137,6 @@ const EditEquipmentPage = () => {
         }
       }
 
-      // Перезавантажуємо додаткові зображення
       if (data.imageIds && Array.isArray(data.imageIds)) {
         const additionalIds = data.imageIds.filter(imgId => imgId !== data.mainImageId);
         if (additionalIds.length > 0) {
@@ -164,9 +166,9 @@ const EditEquipmentPage = () => {
     try {
       await uploadMainImage(id, mainImageFile);
       alert("Головне зображення оновлено!");
-      setMainImageFile(null); // Скидаємо вибраний файл
-      document.querySelector('input[type="file"][accept=".png, .jpg, .jpeg"]:not([multiple])').value = ""; // Очищаємо input
-      reloadImages(); // Перезавантажуємо зображення для відображення змін
+      setMainImageFile(null);
+      document.querySelector('input[type="file"][accept=".png, .jpg, .jpeg"]:not([multiple])').value = "";
+      reloadImages();
     } catch (err) {
       alert("Не вдалося завантажити головне зображення.");
       console.error("Main Image Upload Error:", err);
@@ -178,13 +180,13 @@ const EditEquipmentPage = () => {
     try {
       await uploadAdditionalImages(id, additionalImages);
       alert("Зображення додано!");
-      setAdditionalImages([]); // Скидаємо вибрані файли
-      document.querySelector('input[type="file"][multiple]').value = ""; // Очищаємо input
-      reloadImages(); // Перезавантажуємо зображення для відображення змін
+      setAdditionalImages([]);
+      document.querySelector('input[type="file"][multiple]').value = "";
+      reloadImages();
     } catch (err) {
-      // Перевірка на конкретну помилку ліміту (якщо бекенд її повертає)
-      if (err.response && err.response.data && err.response.data.message && err.response.data.message.includes("Limit exceeded")) {
-        alert("Помилка: Перевищено ліміт зображень для цього оголошення.");
+      console.log(err)
+      if (err.data?.errorMessage.includes("Досягнуто загальний ліміт")) {
+        alert("Помилка: " + err.data?.errorMessage);
       } else {
         alert("Помилка завантаження зображень.");
       }
@@ -194,12 +196,10 @@ const EditEquipmentPage = () => {
 
   if (!equipment) return <div className="loading">Завантаження...</div>;
 
-  // --- JSX ---
   return (
     <div className="edit-equipment-page">
-      <h2>Редагування оголошення "{equipment.name}"</h2> {/* Динамічний заголовок */}
+      <h2>Редагування оголошення "{equipment.name}"</h2>
 
-      {/* Форма редагування полів (залишається без змін) */}
       <div>
         <label>Назва:</label>
         <input
@@ -232,7 +232,6 @@ const EditEquipmentPage = () => {
             setEquipment({
               ...equipment,
               category: selectedCategory,
-              // Скидаємо підкатегорію при зміні категорії (крім випадку OTHER)
               subcategory: selectedCategory === "OTHER" ? "OTHER" : "",
             });
           }}
@@ -255,7 +254,7 @@ const EditEquipmentPage = () => {
             name="subcategory"
             value={equipment.subcategory || ""}
             onChange={handleFieldChange}
-            required={equipment.category !== "OTHER"} // Робимо обов'язковим, якщо категорія не OTHER
+            required={equipment.category !== "OTHER"}
           >
             <option value="">Оберіть підкатегорію</option>
             {categoriesData[equipment.category]?.map((sub) => (
@@ -283,16 +282,15 @@ const EditEquipmentPage = () => {
       </div>
 
       <div>
-        <label>Ціна:</label>
+        <label>Ціна за день (грн):</label>
         <input
           type="number"
-          name="price"
-          value={equipment.price}
+          name="pricePerDay"
+          value={equipment.pricePerDay}
           onChange={handleFieldChange}
-          min="0" // Додаємо мінімальне значення
         />
-        {validationErrors.price && (
-          <p className="error-message">{validationErrors.price}</p>
+        {validationErrors.pricePerDay && (
+          <p className="error-message">{validationErrors.pricePerDay}</p>
         )}
       </div>
 
@@ -300,12 +298,10 @@ const EditEquipmentPage = () => {
 
       <hr />
 
-      {/* Секція зображень */}
       <h3>Зображення</h3>
       {isLoadingImages && <div className="loading">Завантаження зображень...</div>}
 
       <div className="image-section">
-        {/* Головне зображення */}
         <div className="main-image-container">
           <h4>Головне зображення</h4>
           {mainImagePreview ? (
@@ -318,7 +314,6 @@ const EditEquipmentPage = () => {
             accept=".png, .jpg, .jpeg"
             onChange={(e) => {
               setMainImageFile(e.target.files[0]);
-              // Опціонально: локальний перегляд перед завантаженням
               if (e.target.files[0]) {
                 setMainImagePreview(URL.createObjectURL(e.target.files[0]));
               }
@@ -329,7 +324,6 @@ const EditEquipmentPage = () => {
           </button>
         </div>
 
-        {/* Додаткові зображення */}
         <div className="additional-images-container">
           <h4>Додаткові зображення</h4>
           <div className="additional-images-gallery">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchPendingAdvertisements, fetchImageById } from "../../services/api";
 import { Link } from "react-router-dom";
 import "../../assets/EquipmentsPage.css";
@@ -37,7 +37,7 @@ const Moderation = () => {
     <div className="equipments-page">
       <h2>Оголошення на модерацію</h2>
       {error && <p className="error">{error}</p>}
-      
+
       {advertisements.length === 0 && !error ? (
         <p className="no-items">Наразі немає оголошень, що потребують модерації.</p>
       ) : (
@@ -45,7 +45,7 @@ const Moderation = () => {
           {advertisements.map((ad) => (
             <div key={ad.id} className="equipment-card">
               <h3>{ad.equipmentName}</h3>
-              <p>Ціна: {ad.price} грн</p>
+              <p>Ціна за день: {ad.pricePerDay} грн</p>
               {imageUrls[ad.id] ? (
                 <img src={imageUrls[ad.id]} alt={ad.equipmentName} width="200" />
               ) : (

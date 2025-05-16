@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   fetchEquipmentById,
   fetchImageById,
@@ -115,7 +115,10 @@ const AdvertisementModerationPage = () => {
             equipment.condition === "USED" ? "Вживаний" :
               "Відновлений"
         }</p>
-        <p><strong>Ціна:</strong> {equipment.price} грн</p>
+        <p><strong>Ціна за день:</strong> {equipment.pricePerDay} грн</p>
+        <Link to="/user-profile" state={{ userId: equipment.userId }}>
+          👤 Переглянути профіль
+        </Link>
       </div>
 
       <div className="moderation">
